@@ -4,7 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/stepHistoryFragment">
+    app:startDestination="@id/permissionGateFragment">
+    <fragment
+        android:id="@+id/permissionGateFragment"
+        android:name="com.dylantjohnson.simplesteps.permissiongate.PermissionGateFragment"
+        android:label="PermissionGateFragment"
+        tools:layout="@layout/fragment_permission_gate">
+        <action
+            android:id="@+id/action_permissionGateFragment_to_stepHistoryFragment"
+            app:destination="@id/stepHistoryFragment"
+            app:popUpTo="@+id/permissionGateFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/stepHistoryFragment"
