@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/stepHistoryFragment">
+
+    <fragment
+        android:id="@+id/stepHistoryFragment"
+        android:name="com.dylantjohnson.simplesteps.stephistory.StepHistoryFragment"
+        android:label="fragment_step_history"
+        tools:layout="@layout/fragment_step_history" />
+</navigation>
