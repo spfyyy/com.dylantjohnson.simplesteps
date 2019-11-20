@@ -12,13 +12,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".stephistory.StepHistoryFragment">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="?android:attr/progressBarStyle"
+            setVisibility="@{viewModel.isLoading}" />
+
+        <Button
+            android:id="@+id/sortButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.reverseSortOrder()}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Sort Order: Ascending"
+            setVisibility="@{!viewModel.isLoading}"
+            displaySortOrder="@{viewModel.orderAscending}" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/stepHistoryRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/sortButton"
+            setVisibility="@{!viewModel.isLoading}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -17,13 +17,38 @@ class StepHistoryViewModel(data: FitnessData): ViewModel() {
     private val mUiScope = CoroutineScope(Dispatchers.Main + mViewModelJob)
     private val mData = data
 
-    private val mSteps = MutableLiveData<List<StepsStat>>()
+    private val mSteps = MutableLiveData<List<StepsStat>>(null)
     val steps: LiveData<List<StepsStat>>
         get() = mSteps
 
+    private val mOrderAscending = MutableLiveData<Boolean>(true)
+    val orderAscending: LiveData<Boolean>
+        get() = mOrderAscending
+
+    private val mIsLoading = MutableLiveData<Boolean>(true)
+    val isLoading: LiveData<Boolean>
+        get() = mIsLoading
+
     init {
         mUiScope.launch {
+            mIsLoading.value = true
             mSteps.value = mData.getStepHistory()
+            mIsLoading.value = false
+        }
+    }
+
+    fun reverseSortOrder() {
+        mOrderAscending.value = !mOrderAscending.value!!
+        mSteps.value?.let {
+            val newList = it.toMutableList()
+            newList.sortWith(Comparator { oldSteps, newSteps ->
+                if (mOrderAscending.value!!) {
+                    oldSteps.day.compareTo(newSteps.day)
+                } else {
+                    newSteps.day.compareTo(oldSteps.day)
+                }
+            })
+            mSteps.value = newList
         }
     }
 

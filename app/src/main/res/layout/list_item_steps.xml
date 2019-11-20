@@ -9,17 +9,43 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
 
         <TextView
-            displayDate="@{steps.day}"
+            android:id="@+id/dateText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Tuesday, November 12" />
+            tools:text="Tuesday, November 12"
+            displayDate="@{steps.day}" />
+
+        <TextView
+            android:id="@+id/stepsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:textSize="24sp"
+            android:layout_marginEnd="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dateText"
+            app:layout_constraintBottom_toBottomOf="@id/stepsIcon"
+            tools:text="300 Steps"
+            displaySteps="@{steps.total}" />
+
+        <ImageView
+            android:id="@+id/stepsIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_walking"
+            android:contentDescription="@string/steps_icon_description"
+            app:layout_constraintEnd_toStartOf="@id/stepsText"
+            app:layout_constraintTop_toBottomOf="@id/dateText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
