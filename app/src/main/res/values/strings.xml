@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Simple Steps</string>
     <string name="permission_explain">Thanks for using my app!\nTo continue, you need to allow this app to have access to your physical activity data.</string>
+    <string name="steps_date_format">%1$s, %2$s %3$d</string>
 </resources>
