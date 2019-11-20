@@ -22,13 +22,9 @@ class PermissionGateFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
         mBinding = FragmentPermissionGateBinding.inflate(inflater, container, false)
-        return mBinding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
         requestPermissions(arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
             ACTIVITY_RECOGNITION_CODE)
+        return mBinding.root
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
