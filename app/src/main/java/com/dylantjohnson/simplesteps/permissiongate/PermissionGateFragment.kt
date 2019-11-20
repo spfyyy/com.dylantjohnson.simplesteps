@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.dylantjohnson.simplesteps.databinding.FragmentPermissionGateBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -17,11 +18,15 @@ import com.google.android.gms.fitness.data.DataType
 
 
 class PermissionGateFragment : Fragment() {
+    private lateinit var mViewModel: PermissionGateViewModel
     private lateinit var mBinding: FragmentPermissionGateBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
+        mViewModel = ViewModelProviders.of(this).get(PermissionGateViewModel::class.java)
         mBinding = FragmentPermissionGateBinding.inflate(inflater, container, false)
+        mBinding.lifecycleOwner = this
+        mBinding.viewModel = mViewModel
         requestPermissions(arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
             ACTIVITY_RECOGNITION_CODE)
         return mBinding.root
@@ -34,17 +39,24 @@ class PermissionGateFragment : Fragment() {
                 if (grantResults.isNotEmpty()
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     signInToGoogleFit()
+                } else {
+                    mViewModel.notifyFinishedLoading()
                 }
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                GOOGLE_PERMISSIONS_CODE -> navigateNextFragment()
+        when (requestCode) {
+            GOOGLE_PERMISSIONS_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    navigateNextFragment()
+                } else {
+                    mViewModel.notifyFinishedLoading()
+                }
             }
         }
+
     }
 
     private fun signInToGoogleFit() {

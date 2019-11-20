@@ -9,27 +9,29 @@ import com.dylantjohnson.simplesteps.R
 import java.util.*
 
 @BindingAdapter("displayDate")
-fun TextView.displayDate(date: Date) {
-    val calendar = Calendar.getInstance().apply {
-        time = date
+fun TextView.displayDate(date: Date?) {
+    date?.let {
+        val calendar = Calendar.getInstance().apply {
+            time = it
+        }
+        val locale = ConfigurationCompat.getLocales(context.resources.configuration)[0]
+        val dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, locale)
+        val monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, locale)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val display = context.getString(R.string.steps_date_format, dayName, monthName, day)
+        text = display
     }
-    val locale = ConfigurationCompat.getLocales(context.resources.configuration)[0]
-    val dayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, locale)
-    val monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, locale)
-    val day = calendar.get(Calendar.DAY_OF_MONTH)
-    val display = context.getString(R.string.steps_date_format, dayName, monthName, day)
-    text = display
 }
 
 @BindingAdapter("displaySteps")
-fun TextView.displaySteps(count: Int) {
-    val display = context.getString(R.string.steps_count_format, count)
+fun TextView.displaySteps(count: Int?) {
+    val display = context.getString(R.string.steps_count_format, count ?: 0)
     text = display
 }
 
 @BindingAdapter("displaySortOrder")
-fun Button.displaySortOrder(ascending: Boolean) {
-    val display = if (ascending) {
+fun Button.displaySortOrder(ascending: Boolean?) {
+    val display = if (ascending == true) {
         context.getString(R.string.sort_order_ascending)
     } else {
         context.getString(R.string.sort_order_descending)
@@ -38,8 +40,8 @@ fun Button.displaySortOrder(ascending: Boolean) {
 }
 
 @BindingAdapter("setVisibility")
-fun View.setVisibility(visible: Boolean) {
-    visibility = if (visible) {
+fun View.setVisibility(visible: Boolean?) {
+    visibility = if (visible == true) {
         View.VISIBLE
     } else {
         View.GONE
