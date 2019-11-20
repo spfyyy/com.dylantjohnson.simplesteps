@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dylantjohnson.simplesteps">
-    <!-- Required to request physical activity data -->
-    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+    <!-- This app uses the internet to fetch the user's activity stats. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Required to request physical activity data. -->
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     <application
         android:allowBackup="true"
