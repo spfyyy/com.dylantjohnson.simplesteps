@@ -12,10 +12,22 @@ import com.dylantjohnson.simplesteps.data.FitnessData
 
 import com.dylantjohnson.simplesteps.databinding.FragmentStepHistoryBinding
 
+/**
+ * This Fragment is the Step History page.
+ * <p>
+ * Using the Google Fit API, this page simply displays a list of the user's daily step counts. The
+ * sort order of the list can be toggled between chronological and reverse ordering.
+ */
 class StepHistoryFragment : Fragment() {
     private lateinit var mBinding: FragmentStepHistoryBinding
     private lateinit var mViewModel: StepHistoryViewModel
 
+    /**
+     * Set up ViewModel binding.
+     * <p>
+     * This fragment is in charge of observing its ViewModel's step list and updating the
+     * RecyclerView when it changes.
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
         val fitnessData = FitnessData(context!!)

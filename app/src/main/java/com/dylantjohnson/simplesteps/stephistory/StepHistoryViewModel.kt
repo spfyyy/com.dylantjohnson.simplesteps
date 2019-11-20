@@ -12,24 +12,37 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
+/**
+ * ViewModel for the StepHistory page.
+ */
 class StepHistoryViewModel(data: FitnessData): ViewModel() {
     private val mViewModelJob = Job()
     private val mUiScope = CoroutineScope(Dispatchers.Main + mViewModelJob)
     private val mData = data
 
     private val mSteps = MutableLiveData<List<StepsStat>>(null)
+    /**
+     * Observable list of the user's step data.
+     */
     val steps: LiveData<List<StepsStat>>
         get() = mSteps
 
     private val mOrderAscending = MutableLiveData<Boolean>(true)
+    /**
+     * Observable flag for the current sorting order of the user's step data.
+     */
     val orderAscending: LiveData<Boolean>
         get() = mOrderAscending
 
     private val mIsLoading = MutableLiveData<Boolean>(true)
+    /**
+     * Observable flag for whether the user's step data has been fetched or not.
+     */
     val isLoading: LiveData<Boolean>
         get() = mIsLoading
 
     init {
+        // Begin fetching user step data.
         mUiScope.launch {
             mIsLoading.value = true
             mSteps.value = mData.getStepHistory()
@@ -37,6 +50,9 @@ class StepHistoryViewModel(data: FitnessData): ViewModel() {
         }
     }
 
+    /**
+     * Reverse the chronological sorting order the user's step data.
+     */
     fun reverseSortOrder() {
         mOrderAscending.value = !mOrderAscending.value!!
         mSteps.value?.let {
@@ -52,12 +68,21 @@ class StepHistoryViewModel(data: FitnessData): ViewModel() {
         }
     }
 
+    /**
+     * Cancel any running coroutines when this ViewModel is removed.
+     */
     override fun onCleared() {
         super.onCleared()
         mViewModelJob.cancel()
     }
 
+    /**
+     * ViewModel Factory class for generating StepHistoryViewModels.
+     */
     class Factory(private val data: FitnessData): ViewModelProvider.Factory {
+        /**
+         * Generate a StepHistoryViewModel.
+         */
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(StepHistoryViewModel::class.java)) {
                 @Suppress("unchecked_cast")

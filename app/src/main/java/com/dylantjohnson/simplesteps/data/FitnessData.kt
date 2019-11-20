@@ -1,7 +1,6 @@
 package com.dylantjohnson.simplesteps.data
 
 import android.content.Context
-import android.util.Log
 import com.dylantjohnson.simplesteps.models.StepsStat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.fitness.Fitness
@@ -32,6 +31,13 @@ class FitnessData(context: Context) {
         mClient = Fitness.getHistoryClient(context, account!!)
     }
 
+    /**
+     * Retrieve the logged in user's daily step counts for the last 14 days.
+     * <p>
+     * NOTE: Running this from the Android emulator seems to always yield 0 data points, despite
+     * enabling server queries for the request. To see actual data, this app should be run from the
+     * device that is running the Google Fit app.
+     */
     suspend fun getStepHistory(): List<StepsStat> = withContext(Dispatchers.IO) {
         val calendar = Calendar.getInstance().apply {
             time = Date()

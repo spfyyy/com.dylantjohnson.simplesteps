@@ -8,6 +8,9 @@ import androidx.databinding.BindingAdapter
 import com.dylantjohnson.simplesteps.R
 import java.util.*
 
+/**
+ * Bind a Date to a TextView and format it.
+ */
 @BindingAdapter("displayDate")
 fun TextView.displayDate(date: Date?) {
     date?.let {
@@ -23,12 +26,20 @@ fun TextView.displayDate(date: Date?) {
     }
 }
 
+/**
+ * Bind a number to a TextView, formatted as a step count.
+ */
 @BindingAdapter("displaySteps")
 fun TextView.displaySteps(count: Int?) {
     val display = context.getString(R.string.steps_count_format, count ?: 0)
     text = display
 }
 
+/**
+ * Change the text of a button to a particular sort order by binding a boolean.
+ * <p>
+ * True = chronological, false = reverse.
+ */
 @BindingAdapter("displaySortOrder")
 fun Button.displaySortOrder(ascending: Boolean?) {
     val display = if (ascending == true) {
@@ -39,6 +50,9 @@ fun Button.displaySortOrder(ascending: Boolean?) {
     text = display
 }
 
+/**
+ * Set the visibility of a View by binding a boolean to it.
+ */
 @BindingAdapter("setVisibility")
 fun View.setVisibility(visible: Boolean?) {
     visibility = if (visible == true) {
